@@ -5,16 +5,16 @@ using TMPro;
 
 public class SellerCell : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI rating;
-    [SerializeField] private TextMeshProUGUI name;
-    [SerializeField] private TextMeshProUGUI type;
-    [SerializeField] private TextMeshProUGUI gold;
+    [SerializeField] private TextMeshProUGUI _rating;
+    [SerializeField] private TextMeshProUGUI _name;
+    [SerializeField] private TextMeshProUGUI _type;
+    [SerializeField] private TextMeshProUGUI _gold;
 
     public void SetValues(string rating, string name, string type, string gold)
     {
-        this.rating.text = rating;
-        this.name.text = name;
-        this.type.text = type;
-        this.gold.text = gold;
+        _rating.text = rating;
+        _name.text = name;
+        _type.text = type;
+        _gold.text = gold;
     }
 }

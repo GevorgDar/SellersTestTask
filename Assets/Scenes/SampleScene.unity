@@ -748,9 +748,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca78a5fd322e04868bc99eaba9b40f1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sellerCell: {fileID: 3528279395097358718, guid: 650acebd717a9468488a3c1142cb020f,
+  _sellerCell: {fileID: 3528279395097358718, guid: 650acebd717a9468488a3c1142cb020f,
     type: 3}
-  scrollViewContent: {fileID: 252975392}
+  _scrollViewContent: {fileID: 252975392}
 --- !u!1 &1119556155
 GameObject:
   m_ObjectHideFlags: 0

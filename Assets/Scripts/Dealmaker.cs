@@ -9,23 +9,23 @@
 
 public class Dealmaker
 {
-    private int dealsCount;
-    private Seller firstSeller;
-    private Seller secondSeller;
+    private int _dealsCount;
+    private Seller _firstSeller;
+    private Seller _secondSeller;
     //поведение в текущем сделке
-    private SellerBehaviour firstSellerBehaviour;
-    private SellerBehaviour secondSellerBehaviour;
+    private SellerBehaviour _firstSellerBehaviour;
+    private SellerBehaviour _secondSellerBehaviour;
 
     public void MakeADeals(Seller first, Seller second)
     {
         //5 до 10 сделок между каждой парой торговцев
-        dealsCount = Random.Range(5, 10);
-        firstSeller = first;
-        secondSeller = second;
-        firstSellerBehaviour = first.Behaviour;
-        secondSellerBehaviour = second.Behaviour;
+        _dealsCount = Random.Range(5, 10);
+        _firstSeller = first;
+        _secondSeller = second;
+        _firstSellerBehaviour = first.Behaviour;
+        _secondSellerBehaviour = second.Behaviour;
 
-        for (int i = 0; i < dealsCount; i++)
+        for (int i = 0; i < _dealsCount; i++)
         {
             ErrorProbability();
             Calculation();
@@ -34,29 +34,29 @@ public class Dealmaker
 
     private void Calculation()
     {
-        if (firstSellerBehaviour == SellerBehaviour.Cheat && secondSellerBehaviour == SellerBehaviour.Cheat)
+        if (_firstSellerBehaviour == SellerBehaviour.Cheat && _secondSellerBehaviour == SellerBehaviour.Cheat)
         {
             //оба сжульничают
-            firstSeller.IncomeGeneration(2);
-            secondSeller.IncomeGeneration(2);
+            _firstSeller.IncomeGeneration(2);
+            _secondSeller.IncomeGeneration(2);
         }
-        else if (firstSellerBehaviour == SellerBehaviour.Cooperate && secondSellerBehaviour == SellerBehaviour.Cooperate)
+        else if (_firstSellerBehaviour == SellerBehaviour.Cooperate && _secondSellerBehaviour == SellerBehaviour.Cooperate)
         {
             //оба проводят сделку честно
-            firstSeller.IncomeGeneration(4);
-            secondSeller.IncomeGeneration(4);
+            _firstSeller.IncomeGeneration(4);
+            _secondSeller.IncomeGeneration(4);
         }
-        else if (firstSellerBehaviour == SellerBehaviour.Cheat && secondSellerBehaviour == SellerBehaviour.Cooperate)
+        else if (_firstSellerBehaviour == SellerBehaviour.Cheat && _secondSellerBehaviour == SellerBehaviour.Cooperate)
         {
             //первый торговец жулик, а втарой честный
-            firstSeller.IncomeGeneration(5);
-            secondSeller.IncomeGeneration(1);
+            _firstSeller.IncomeGeneration(5);
+            _secondSeller.IncomeGeneration(1);
         }
         else
         {
             //первый торговец честный, а втарой жулик
-            firstSeller.IncomeGeneration(1);
-            secondSeller.IncomeGeneration(5);
+            _firstSeller.IncomeGeneration(1);
+            _secondSeller.IncomeGeneration(5);
         }
 
         RefreshThinking();
@@ -64,11 +64,11 @@ public class Dealmaker
 
     private void RefreshThinking()
     {
-        firstSeller.TypeOfThinking(partnerBehavior: secondSellerBehaviour);
-        secondSeller.TypeOfThinking(partnerBehavior: firstSellerBehaviour);
+        _firstSeller.TypeOfThinking(partnerBehavior: _secondSellerBehaviour);
+        _secondSeller.TypeOfThinking(partnerBehavior: _firstSellerBehaviour);
 
-        firstSellerBehaviour = firstSeller.Behaviour;
-        secondSellerBehaviour = secondSeller.Behaviour;
+        _firstSellerBehaviour = _firstSeller.Behaviour;
+        _secondSellerBehaviour = _secondSeller.Behaviour;
     }
 
     //В процессе сделки для каждого торговца существует 5% вероятность ошибиться и принять неправильное решение
@@ -76,25 +76,25 @@ public class Dealmaker
     {
         if (Random.Range(1, 100) > 95)
         {
-            if (firstSellerBehaviour == SellerBehaviour.Cheat)
+            if (_firstSellerBehaviour == SellerBehaviour.Cheat)
             {
-                firstSellerBehaviour = SellerBehaviour.Cooperate;
+                _firstSellerBehaviour = SellerBehaviour.Cooperate;
             }
             else
             {
-                firstSellerBehaviour = SellerBehaviour.Cheat;
+                _firstSellerBehaviour = SellerBehaviour.Cheat;
             }
         }
 
         if (Random.Range(1, 100) > 95)
         {
-            if (secondSellerBehaviour == SellerBehaviour.Cheat)
+            if (_secondSellerBehaviour == SellerBehaviour.Cheat)
             {
-                secondSellerBehaviour = SellerBehaviour.Cooperate;
+                _secondSellerBehaviour = SellerBehaviour.Cooperate;
             }
             else
             {
-                secondSellerBehaviour = SellerBehaviour.Cheat;
+                _secondSellerBehaviour = SellerBehaviour.Cheat;
             }
         }
     }

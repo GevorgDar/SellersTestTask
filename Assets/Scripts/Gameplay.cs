@@ -9,9 +9,9 @@ public class Gameplay : MonoBehaviour
     public static Gameplay current;
     public event Action<List<Seller>> arrangedSellerList;
     // TODO: - set max sellers, and last update sellers count in unity
-    private List<Seller> sellers;
-    private Dealmaker dealmaker;
-    private bool firstYear = true;
+    private List<Seller> _sellers;
+    private Dealmaker _dealmaker;
+    private bool _firstYear = true;
 
     private void Awake()
     {
@@ -21,29 +21,37 @@ public class Gameplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dealmaker = new Dealmaker();
-        sellers = PrimordialInitializationSeller();
-        arrangedSellerList(sellers);
+        _dealmaker = new Dealmaker();
+        List<SellerType> sellerTypes = new List<SellerType>(){
+                                            SellerType.Altruist,
+                                            SellerType.Cunning,
+                                            SellerType.Liar,
+                                            SellerType.Sly,
+                                            SellerType.Unpredictable,
+                                            SellerType.Vindictive};
+
+        _sellers = PrimordialInitializationSeller(60, sellerTypes);
+        arrangedSellerList(_sellers);
     }
 
     public void OneYearLater()
     {
-        if (firstYear)
-            firstYear = false;
+        if (_firstYear)
+            _firstYear = false;
         else
-            RefreshSellersList(sellers: sellers, lastSellers: 20);
+            RefreshSellersList(sellers: _sellers, lastSellers: 20);
 
-        for (int first = 0; first < sellers.Count; first++)
+        for (int first = 0; first < _sellers.Count; first++)
         {
-            for (int second = first + 1; second < sellers.Count; second++)
+            for (int second = first + 1; second < _sellers.Count; second++)
             {
-                dealmaker.MakeADeals(sellers[first], sellers[second]);
+                _dealmaker.MakeADeals(_sellers[first], _sellers[second]);
             }
         }
         //сортировка по золото
-        sellers = sellers.OrderByDescending(x => x.SellerCurrentYearOlds()).ToList();
+        _sellers = _sellers.OrderByDescending(x => x.SellerCurrentYearOlds()).ToList();
 
-        arrangedSellerList(sellers);
+        arrangedSellerList(_sellers);
     }
 
     private void RefreshSellersList(List<Seller> sellers, int lastSellers)
@@ -52,7 +60,7 @@ public class Gameplay : MonoBehaviour
 
         for (int i = sellers.Count - 1; i >= sellers.Count - lastSellers; i--)
         {
-            sellers[i] = Seller.create(sellers[topSellers].SellerType);
+            sellers[i] = SellerCreator.Singltone.create(sellers[topSellers].SellerType);
             topSellers++;
         }
 
@@ -64,35 +72,18 @@ public class Gameplay : MonoBehaviour
     }
 
     //Изначально в Гильдии состоит равное число торговцев, выступающих приверженцами каждой из перечисленных стратегий.
-    private List<Seller> PrimordialInitializationSeller()
+    private List<Seller> PrimordialInitializationSeller(int count, List<SellerType> sellerTypes)
     {
         List<Seller> sellers = new List<Seller>();
-    
-        for (int i = 0; i < 60; i++)
+        int sellersTypesCount = sellerTypes.Count;
+        //сколько должно быть из каждого
+        int countOfEach = count / sellersTypesCount;
+
+        for (int i = 0; i < sellersTypesCount; i++)
         {
-            if (i < 10)
+            for (int j = countOfEach * i; j < countOfEach * (i + 1) ; j++)
             {
-                sellers.Add(Seller.create(SellerType.Altruist));
-            }
-            else if (i < 20)
-            {
-                sellers.Add(Seller.create(SellerType.Liar));
-            }
-            else if (i < 30)
-            {
-                sellers.Add(Seller.create(SellerType.Sly));
-            }
-            else if (i < 40)
-            {
-                sellers.Add(Seller.create(SellerType.Unpredictable));
-            }
-            else if (i < 50)
-            {
-                sellers.Add(Seller.create(SellerType.Vindictive));
-            }
-            else
-            {
-                sellers.Add(Seller.create(SellerType.Cunning));
+                sellers.Add(SellerCreator.Singltone.create(sellerTypes[i]));    
             }
         }
 

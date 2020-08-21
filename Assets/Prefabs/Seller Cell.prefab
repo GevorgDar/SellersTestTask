@@ -112,10 +112,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1468272abca44750867fb729d97b5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rating: {fileID: 3528279396962460815}
-  name: {fileID: 3528279396127210876}
-  type: {fileID: 3528279395559156122}
-  gold: {fileID: 3528279395189545578}
+  _rating: {fileID: 3528279396962460815}
+  _name: {fileID: 3528279396127210876}
+  _type: {fileID: 3528279395559156122}
+  _gold: {fileID: 3528279395189545578}
 --- !u!1 &3528279395189545576
 GameObject:
   m_ObjectHideFlags: 0
